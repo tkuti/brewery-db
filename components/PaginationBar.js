@@ -17,7 +17,7 @@ const PaginationBar = () => {
       <Pagination.Prev onClick={() => page !== 1 && setPage(page - 1)} />
     )
     pagination.push(
-      <Pagination.Ellipsis onClick={() => page > 11 && setPage(page - 10)} />
+      <Pagination.Ellipsis  onClick={() => page > 11 && setPage(page - 10)} />
     )
     const floor = Math.floor(page / 10) * 10 || 1
     for (let number = floor; number <= floor + 9; number++) {

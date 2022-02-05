@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table'
 import Spinner from 'react-bootstrap/Spinner'
 import Link from 'next/link'
 import PaginationBar from '../components/PaginationBar'
+import SearchBar from '../components/SearchBar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Breweries = () => {
@@ -16,7 +17,8 @@ const Breweries = () => {
         <Spinner animation='border' variant='primary' />
       ) : (
         <>
-          <Table striped bordered hover>
+          <SearchBar />
+          <Table striped bordered hover variant="dark">
             <thead>
               <tr>
                 <th>Name</th>

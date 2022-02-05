@@ -1,11 +1,11 @@
 import '../styles/globals.css'
-import { DataContextProvider } from '../context/dataContext'
+import Layout from '../components/Layout'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <DataContextProvider>
+    <Layout>
       <Component {...pageProps} />
-    </DataContextProvider>
+    </Layout>
   )
 }
 
