@@ -1,0 +1,30 @@
+.home-wrapper {
+  position: relative;
+  width: 100%;
+  @include flex(column, flex-start, center);
+  z-index: 1;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../public/images/background.png');
+    background-size: cover;
+    z-index: -1;
+    filter: brightness(26%) saturate(127%) blur(4px);
+  }
+  .info {
+    color: white;
+    z-index: 2;
+    @include flex(column, center, center);
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    text-shadow:  2px 2px 2px black;
+    padding: 2rem 1rem;
+  }
+}
+
+

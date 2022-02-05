@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { ListGroup, Form } from 'react-bootstrap'
+import { ListGroup, Form, InputGroup } from 'react-bootstrap'
 import Link from 'next/link'
 import { DataContext } from '../context/dataContext'
+import { FaBeer } from 'react-icons/fa';
 
 const SearchBar = () => {
   const [inputValue, setInputValue] = useState('')
@@ -10,18 +11,24 @@ const SearchBar = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       fetchAutoComplete(inputValue)
-    }, 1000)
+    }, 500)
 
     return () => clearTimeout(timeout)
   }, [inputValue])
 
   return (
-    <div>
-      <Form.Control
-        type='text'
-        placeholder='Search'
-        onChange={e => setInputValue(e.target.value)}
-      />
+    <div className='search-wrapper'>
+      <InputGroup className='mb-3'>
+        <Form.Control
+          type='text'
+          size='lg'
+          placeholder='Search'
+          onChange={e => setInputValue(e.target.value)}
+        />
+        <InputGroup.Text id='basic-addon1'>
+        <FaBeer />
+        </InputGroup.Text>
+      </InputGroup>
       <ListGroup>
         {autoCompleteList &&
           autoCompleteList.slice(0, 5).map((brewery, i) => (
