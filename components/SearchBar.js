@@ -1,20 +1,25 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { ListGroup, Form, InputGroup } from 'react-bootstrap'
+import { ListGroup, Form, InputGroup, Spinner } from 'react-bootstrap'
 import Link from 'next/link'
 import { DataContext } from '../context/dataContext'
-import { FaBeer } from 'react-icons/fa';
+import { FaBeer } from 'react-icons/fa'
 
 const SearchBar = () => {
-  const [inputValue, setInputValue] = useState('')
-  const { autoCompleteList, fetchAutoComplete } = useContext(DataContext)
+  const {
+    query,
+    setQuery,
+    isLoadingAutoComplete,
+    autoCompleteList,
+    fetchAutoComplete
+  } = useContext(DataContext)
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      fetchAutoComplete(inputValue)
+      fetchAutoComplete()
     }, 500)
 
     return () => clearTimeout(timeout)
-  }, [inputValue])
+  }, [query])
 
   return (
     <div className='search-wrapper'>
@@ -23,21 +28,30 @@ const SearchBar = () => {
           type='text'
           size='lg'
           placeholder='Search'
-          onChange={e => setInputValue(e.target.value)}
+          value={query}
+          onChange={e => setQuery(e.target.value)}
         />
         <InputGroup.Text id='basic-addon1'>
-        <FaBeer />
+          <FaBeer />
         </InputGroup.Text>
       </InputGroup>
       <ListGroup>
-        {autoCompleteList &&
+        {isLoadingAutoComplete ? (
+          <div className='spinner-container'>
+            <Spinner animation='border' variant='warning' />
+          </div>
+        ) : (
+          autoCompleteList &&
           autoCompleteList.slice(0, 5).map((brewery, i) => (
-            <ListGroup.Item key={i} action>
-              <Link href='/brewery/[breweryId]' as={`/brewery/${brewery.id}`}>
-                {brewery.name}
-              </Link>
-            </ListGroup.Item>
-          ))}
+            <Link
+              key={i}
+              href='/brewery/[breweryId]'
+              as={`/brewery/${brewery.id}`}
+            >
+              <ListGroup.Item action>{brewery.name}</ListGroup.Item>
+            </Link>
+          ))
+        )}
       </ListGroup>
     </div>
   )

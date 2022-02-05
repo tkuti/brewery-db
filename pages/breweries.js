@@ -6,14 +6,16 @@ import PaginationBar from '../components/PaginationBar'
 import SearchBar from '../components/SearchBar'
 
 const Breweries = () => {
-  const { breweryList, isLoading } = useContext(DataContext)
+  const { breweryList, isLoadingList } = useContext(DataContext)
 
   return (
     <div className='wrapper breweries-wrapper'>
-      <Container>
+      <Container >
         <h2>Breweries</h2>
-        {isLoading ? (
-          <Spinner animation='border' variant='warning' />
+        {isLoadingList ? (
+           <div className="spinner-container">
+             <Spinner animation='border' variant='warning' />
+           </div>
         ) : (
           <>
             <SearchBar />

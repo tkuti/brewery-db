@@ -1,44 +1,41 @@
-import axios from 'axios'
 import React, { createContext, useReducer, useState, useEffect } from 'react'
+import useFetchData from '../hooks/useFetchData'
 
 export const DataContext = createContext()
 
 export const DataContextProvider = props => {
   const [page, setPage] = useState(1)
-  const [breweryList, setBreweryList] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [breweryDetails, setBreweryDetails] = useState(null)
-  const [autoCompleteList, setAutoCompleteList] = useState(null)
+  const [query, setQuery] = useState("")
+  const {
+    data: breweryList,
+    isLoading: isLoadingList,
+    fetchData: fetchDataList
+  } = useFetchData()
+  const {
+    data: breweryDetails,
+    isLoading: isLoadingDetails,
+    fetchData: fetchDataDetails
+  } = useFetchData()
+  const {
+    data: autoCompleteList,
+    isLoading: isLoadingAutoComplete,
+    fetchData: fetchDataAutoComplete
+  } = useFetchData()
 
   useEffect(() => {
     fetchList()
   }, [page])
 
   const fetchList = async () => {
-    setIsLoading(true)
-    const response = await axios.get(
-      `https://api.openbrewerydb.org/breweries?per_page=10&page=${page}`
-    )
-    setBreweryList(response.data)
-    setIsLoading(false)
+    fetchDataList(`?per_page=10&page=${page}`)
   }
 
   const fetchDetails = async id => {
-    //setIsLoading(true)
-    const response = await axios.get(
-      `https://api.openbrewerydb.org/breweries/${id}`
-    )
-    setBreweryDetails(response.data)
-    // setIsLoading(false)
+    fetchDataDetails(`/${id}`)
   }
 
-  const fetchAutoComplete = async query => {
-    //setIsLoading(true)
-    const response = await axios.get(
-      `https://api.openbrewerydb.org/breweries/autocomplete?query=${query}`
-    )
-    setAutoCompleteList(response.data)
-    //setIsLoading(false)
+  const fetchAutoComplete = async () => {
+    fetchDataAutoComplete(`/autocomplete?query=${query}`)
   }
 
   return (
@@ -46,8 +43,12 @@ export const DataContextProvider = props => {
       value={{
         page,
         setPage,
+        query,
+        setQuery,
         breweryList,
-        isLoading,
+        isLoadingList,
+        isLoadingDetails,
+        isLoadingAutoComplete,
         breweryDetails,
         fetchList,
         fetchDetails,

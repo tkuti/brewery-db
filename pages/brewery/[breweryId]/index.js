@@ -4,7 +4,7 @@ import { DataContext } from '../../../context/dataContext'
 import { Spinner, Table, Button, Container } from 'react-bootstrap'
 
 const Brewery = () => {
-  const { breweryDetails, isLoading, fetchDetails } = useContext(DataContext)
+  const { breweryDetails, isLoadingDetails, fetchDetails } = useContext(DataContext)
   const router = useRouter()
   const { breweryId } = router.query
 
@@ -13,17 +13,19 @@ const Brewery = () => {
   }, [])
 
   return (
-    <div className='wrapper'>
-      <Container>
+    <div className='wrapper details-wrapper'>
+      <Container >
         <Button
           variant='outline-warning'
           size='lg'
           onClick={() => router.back()}
         >
-          Back
+          &laquo; Back
         </Button>
-        {isLoading ? (
-          <Spinner animation='border' variant='primary' />
+        {isLoadingDetails ? (
+          <div className="spinner-container">
+            <Spinner animation='border' variant='warning' />
+          </div>
         ) : (
           <div>
             <h2>{breweryDetails?.name}</h2>

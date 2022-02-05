@@ -1,5 +1,6 @@
 $primary-color: #FFC107;
 $bg-color: #0c0e0f;
+$bg-light: rgba(255, 255, 255, 0.2);
 $nav-height: 5rem;
 
 @mixin flex ($direction, $justify, $align) {
@@ -11,7 +12,8 @@ $nav-height: 5rem;
 
 @font-face {
   font-family: 'Sketch';
-  src: url('../public/fonts/Sketch.ttf');
+  src: u
+  rl('../public/fonts/Sketch.ttf');
 }
 
 h1 {
@@ -54,6 +56,8 @@ a {
   background-color: $bg-color;
   min-height: 100vh;
   padding-top: calc($nav-height + 2rem);
+  padding-bottom: 1rem;
+  margin: 0;
 }
 
 
@@ -62,9 +66,22 @@ a {
   .list-group {
     margin-top: -1rem;
     .list-group-item {
-      background-color: rgba(white, .3);
+      background: $bg-light;
       color: white;
+      &:hover {
+        color: $primary-color;
+      }
     }
+  }
+}
+
+
+
+.spinner-container {
+  text-align: center;
+  .spinner-border {
+    margin: 1rem;
+    
   }
 }
 
