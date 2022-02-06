@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import { DataContext } from '../context/dataContext'
-import { Table, Spinner, Container } from 'react-bootstrap'
-import Link from 'next/link'
-import PaginationBar from '../components/PaginationBar'
+import { Spinner, Container } from 'react-bootstrap'
 import SearchBar from '../components/SearchBar'
+import DataTable from '../components/DataTable'
+import PaginationBar from '../components/PaginationBar'
 import axios from 'axios'
 
 const Breweries = ({ initialBreweries }) => {
-  const { breweryList, setBreweryList, isLoading, page, fetchList } =
+  const { setBreweryList, isLoading, page, fetchList } =
     useContext(DataContext)
 
   useEffect(() => {
@@ -34,34 +34,7 @@ const Breweries = ({ initialBreweries }) => {
           </div>
         ) : (
           <>
-            <Table striped bordered hover variant='dark' responsive>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Country</th>
-                  <th>Type</th>
-                  <th>Web</th>
-                </tr>
-              </thead>
-              <tbody>
-                {breweryList &&
-                  breweryList.map((brewery, index) => (
-                    <tr key={index}>
-                      <td>
-                        <Link
-                          href='/brewery/[breweryId]'
-                          as={`/brewery/${brewery.id}`}
-                        >
-                          {brewery.name}
-                        </Link>
-                      </td>
-                      <td>{brewery.country}</td>
-                      <td>{brewery.brewery_type}</td>
-                      <td>{brewery.website_url}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </Table>
+            <DataTable />
             <PaginationBar />
           </>
         )}
@@ -70,11 +43,18 @@ const Breweries = ({ initialBreweries }) => {
   )
 }
 
+
 export const getServerSideProps = async context => {
-  const response = await axios.get(
-    `https://api.openbrewerydb.org/breweries?per_page=10&page=1`
-  )
-  const initialBreweries = response.data
+  let initialBreweries
+  try {
+    const response = await axios.get(
+      `https://api.openbrewerydb.org/breweries?per_page=10&page=1`
+    )
+    initialBreweries = response.data
+  } catch (error) {
+    console.log(error)
+    initialBreweries = []
+  }
 
   return {
     props: {

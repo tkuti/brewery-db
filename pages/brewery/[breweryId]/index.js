@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { DataContext } from '../../../context/dataContext'
-import { Spinner, Table, Button, Container } from 'react-bootstrap'
+import { Table, Button, Container } from 'react-bootstrap'
 import axios from 'axios'
 
 const Brewery = ({ details }) => {
@@ -47,11 +47,18 @@ const Brewery = ({ details }) => {
   )
 }
 
+
 export const getServerSideProps = async context => {
-  const response = await axios.get(
-    `https://api.openbrewerydb.org/breweries/${context.params.breweryId}`
-  )
-  const details = response.data
+  let details
+  try {
+    const response = await axios.get(
+      `https://api.openbrewerydb.org/breweries/${context.params.breweryId}`
+    )
+    details = response.data
+  } catch (error) {
+    console.log(error)
+    details = {}
+  }
   return {
     props: {
       details
