@@ -4,23 +4,37 @@ import useFetchData from '../hooks/useFetchData'
 export const DataContext = createContext()
 
 export const DataContextProvider = props => {
-  const [page, setPage] = useState(1)
-  const [query, setQuery] = useState("")
+  const [page, dispatchPage] = useReducer((state, action) => {
+    const lastPage = 802
+    switch (action.type) {
+      case 'incrementWithOne':
+        return state === lastPage ? state : state + 1
+      case 'decrementWithOne':
+        return state === 1 ? state : state - 1
+      case 'incrementWithTen':
+        return state >= lastPage - 10 ? state : state + 10
+      case 'decrementWithTen':
+        return  state <= 10 ? state : state - 10
+      case 'first':
+        return 1
+      case 'last':
+        return lastPage
+      case 'setWithOtherValue':
+        return action.payload
+      default:
+        return state
+    }
+  }, 1)
+  const [query, setQuery] = useState('')
+  const [breweryDetails, setBreweryDetails] = useState(null)
   const {
     data: breweryList,
-    isLoading: isLoadingList,
-    fetchData: fetchDataList
+    setData: setBreweryList,
+    fetchData: fetchDataList,
+    isLoading
   } = useFetchData()
-  const {
-    data: breweryDetails,
-    isLoading: isLoadingDetails,
-    fetchData: fetchDataDetails
-  } = useFetchData()
-  const {
-    data: autoCompleteList,
-    isLoading: isLoadingAutoComplete,
-    fetchData: fetchDataAutoComplete
-  } = useFetchData()
+  const { data: autoCompleteList, fetchData: fetchDataAutoComplete } =
+    useFetchData()
 
   useEffect(() => {
     fetchList()
@@ -28,10 +42,6 @@ export const DataContextProvider = props => {
 
   const fetchList = async () => {
     fetchDataList(`?per_page=10&page=${page}`)
-  }
-
-  const fetchDetails = async id => {
-    fetchDataDetails(`/${id}`)
   }
 
   const fetchAutoComplete = async () => {
@@ -42,16 +52,15 @@ export const DataContextProvider = props => {
     <DataContext.Provider
       value={{
         page,
-        setPage,
+        dispatchPage,
         query,
         setQuery,
-        breweryList,
-        isLoadingList,
-        isLoadingDetails,
-        isLoadingAutoComplete,
         breweryDetails,
+        setBreweryDetails,
+        breweryList,
+        setBreweryList,
+        isLoading,
         fetchList,
-        fetchDetails,
         autoCompleteList,
         fetchAutoComplete
       }}

@@ -1,21 +1,28 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { DataContext } from '../context/dataContext'
 import { Table, Spinner, Container } from 'react-bootstrap'
 import Link from 'next/link'
 import PaginationBar from '../components/PaginationBar'
 import SearchBar from '../components/SearchBar'
+import axios from 'axios'
 
-const Breweries = () => {
-  const { breweryList, isLoadingList } = useContext(DataContext)
+const Breweries = ({ initialBreweries }) => {
+  const { breweryList, setBreweryList, isLoading, page, fetchList } =
+    useContext(DataContext)
+
+  useEffect(() => {
+    setBreweryList(initialBreweries)
+    if (page !== 1) fetchList()
+  }, [])
 
   return (
     <div className='wrapper breweries-wrapper'>
-      <Container >
+      <Container>
         <h2>Breweries</h2>
-        {isLoadingList ? (
-           <div className="spinner-container">
-             <Spinner animation='border' variant='warning' />
-           </div>
+        {isLoading ? (
+          <div className='spinner-container'>
+            <Spinner animation='border' variant='warning' />
+          </div>
         ) : (
           <>
             <SearchBar />
@@ -53,6 +60,19 @@ const Breweries = () => {
       </Container>
     </div>
   )
+}
+
+export const getServerSideProps = async context => {
+  const response = await axios.get(
+    `https://api.openbrewerydb.org/breweries?per_page=10&page=1`
+  )
+  const initialBreweries = response.data
+
+  return {
+    props: {
+      initialBreweries
+    }
+  }
 }
 
 export default Breweries

@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
               <Navbar.Brand href='/'>
                 <img
                   alt=''
-                  src='./images/logo.png'
+                  src='/images/logo.png'
                   width='50'
                   height='50'
                   className='d-inline-block align-top'
