@@ -1,9 +1,7 @@
-//import styles from '../styles/Home.module.scss'
-import { useRouter } from 'next/router'
 import { Button, Container } from 'react-bootstrap'
+import Link from 'next/link'
 
 export default function Home() {
-  const router = useRouter()
 
   return (
     <div className='wrapper home-wrapper'>
@@ -13,18 +11,16 @@ export default function Home() {
           <p>Welcome!</p>
           <p>
             Here you can get public information on breweries, cideries,
-            brewpubs, and bottleshops, from all over the world! Pick from the list
-            or search for breweries for details!
+            brewpubs, and bottleshops, from all over the world! Pick from the
+            list or search for breweries for details!
           </p>
         </Container>
       </div>
-      <Button
-        variant='outline-warning'
-        size='lg'
-        onClick={() => router.push('/breweries')}
-      >
-        Show more &raquo;
-      </Button>
+      <Link href='/breweries' passHref>
+        <Button variant='outline-warning' size='lg'>
+          Show more &raquo;
+        </Button>
+      </Link>
     </div>
   )
 }

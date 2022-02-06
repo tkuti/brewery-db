@@ -7,13 +7,14 @@ const SearchBar = () => {
   const { query, setQuery, autoCompleteList, fetchAutoComplete } =
     useContext(DataContext)
 
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       fetchAutoComplete()
     }, 300)
-
     return () => clearTimeout(timeout)
   }, [query])
+
 
   return (
     <div className='search-wrapper'>
@@ -29,7 +30,7 @@ const SearchBar = () => {
       <ListGroup>
         {autoCompleteList &&
           autoCompleteList.slice(0, 5).map((brewery, i) => (
-            <Link
+            <Link passHref
               key={i}
               href='/brewery/[breweryId]'
               as={`/brewery/${brewery.id}`}

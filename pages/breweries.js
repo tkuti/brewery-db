@@ -18,14 +18,22 @@ const Breweries = ({ initialBreweries }) => {
   return (
     <div className='wrapper breweries-wrapper'>
       <Container>
-        <h2>Breweries</h2>
+        <h2 className='subtitle'>Search for breweries</h2>
+        <p className='description'>
+          Start typing and choose one from the options for more details
+        </p>
+        <SearchBar />
+        <h2 className='subtitle'>All breweries</h2>
+        <p className='description'>
+          You can use pagination to navigate between pages. Click to the
+          brewery&apos;s name for more details.
+        </p>
         {isLoading ? (
           <div className='spinner-container'>
             <Spinner animation='border' variant='warning' />
           </div>
         ) : (
           <>
-            <SearchBar />
             <Table striped bordered hover variant='dark' responsive>
               <thead>
                 <tr>

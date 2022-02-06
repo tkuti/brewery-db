@@ -1,9 +1,10 @@
-$primary-color: #FFC107;
+$primary-color: #ffc107;
 $bg-color: #0c0e0f;
-$bg-light: rgba(255, 255, 255, 0.2);
+$bg-light: #ffffff33;
+$text-color: #eed7ad;
 $nav-height: 5rem;
 
-@mixin flex ($direction, $justify, $align) {
+@mixin flex($direction, $justify, $align) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justify;
@@ -12,24 +13,7 @@ $nav-height: 5rem;
 
 @font-face {
   font-family: 'Sketch';
-  src: u
-  rl('../public/fonts/Sketch.ttf');
-}
-
-h1 {
-  font-family: 'Sketch';
-  font-size: 4rem;
-  text-shadow:  2px 4px 4px black;
-  color: rgba($primary-color,.7);
-  letter-spacing: .5rem;
-  font-weight: 100;
-  text-align: center;
-}
-
-h2 {
-  text-align: center;
-  padding: 1rem .5rem;
-  color: wheat;
+  src: url('../public/fonts/Sketch.ttf');
 }
 
 html,
@@ -38,13 +22,10 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-  &:hover {
-    color: $primary-color;
+  color: $text-color;
+  font-size: 12px;
+  @media (min-width: 577px) {
+      font-size: 16px;
   }
 }
 
@@ -60,61 +41,23 @@ a {
   margin: 0;
 }
 
-
-.search-wrapper {
-  margin: 1rem;
-  .list-group {
-    margin-top: -1rem;
-    .list-group-item {
-      background: $bg-light;
-      color: white;
-      &:hover {
-        color: $primary-color;
-      }
-    }
-  }
-}
-
-
-
-.spinner-container {
+.subtitle {
   text-align: center;
-  .spinner-border {
-    margin: 1rem;
-    
-  }
+  padding: 1rem 0.3rem;
+  color: $primary-color;
 }
 
 th {
   color: $primary-color;
   text-align: center;
 }
-.pagination {
-  display: flex;
-  justify-content: center;
-}
-.page-item a {
-  color: black;
- margin: .2rem;
-}
 
-.page-item.active .page-link {
-  color: black;
-  background-color: $primary-color;
-  border-color: $primary-color;
-  font-weight: 600;
-  margin: .2rem .2rem .2rem 0;
-}
-.navbar {
-  box-shadow: 0 0 4px $primary-color;
-  height: $nav-height;
-  background-color: $bg-color;
-  .navbar-brand {
-    @include flex(row, space-between, center);
-    .brand-name {
-      padding-left: 1rem;
-      font-size: 1.8rem;
-      font-weight: 600;
-    }
+a {
+  color: inherit;
+  text-decoration: none;
+  &:hover {
+    color: $primary-color;
   }
 }
+
+

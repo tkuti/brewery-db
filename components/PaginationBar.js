@@ -30,11 +30,12 @@ const PaginationBar = () => {
         onClick={() => dispatchPage({ type: 'decrementWithTen' })}
       />
     )
-    const floor = Math.floor(page / 10) * 10 || 1
-    for (let number = floor; number <= floor + 9 && number <= 802; number++) {
+    const floor = Math.floor(page / 5) * 5 || 1
+    for (let number = floor; number <= floor + 4 && number <= 802; number++) {
       pagination.push(
         <Pagination.Item
           key={number}
+          size="sm"
           active={number === page}
           value={number}
           onClick={() =>

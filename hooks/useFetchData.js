@@ -11,8 +11,12 @@ const useFetchData = () => {
 
   const fetchData = async url => {
     setIsLoading(true)
-    const response = await instance.get(url)
-    setData(response.data)
+    try {
+      const response = await instance.get(url)
+      setData(response.data)
+    } catch (err) {
+      console.log(err)
+    }
     setIsLoading(false)
   }
 

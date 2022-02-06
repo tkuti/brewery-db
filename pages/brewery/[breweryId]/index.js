@@ -23,7 +23,7 @@ const Brewery = ({ details }) => {
           &laquo; Back
         </Button>
         <div>
-          <h2>{breweryDetails?.name}</h2>
+          <h2 className='subtitle'>{breweryDetails?.name}</h2>
           <Table striped bordered variant='dark'>
             <thead>
               <tr>

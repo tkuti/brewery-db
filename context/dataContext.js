@@ -4,27 +4,6 @@ import useFetchData from '../hooks/useFetchData'
 export const DataContext = createContext()
 
 export const DataContextProvider = props => {
-  const [page, dispatchPage] = useReducer((state, action) => {
-    const lastPage = 802
-    switch (action.type) {
-      case 'incrementWithOne':
-        return state === lastPage ? state : state + 1
-      case 'decrementWithOne':
-        return state === 1 ? state : state - 1
-      case 'incrementWithTen':
-        return state >= lastPage - 10 ? state : state + 10
-      case 'decrementWithTen':
-        return  state <= 10 ? state : state - 10
-      case 'first':
-        return 1
-      case 'last':
-        return lastPage
-      case 'setWithOtherValue':
-        return action.payload
-      default:
-        return state
-    }
-  }, 1)
   const [query, setQuery] = useState('')
   const [breweryDetails, setBreweryDetails] = useState(null)
   const {
@@ -36,15 +15,40 @@ export const DataContextProvider = props => {
   const { data: autoCompleteList, fetchData: fetchDataAutoComplete } =
     useFetchData()
 
+  const [page, dispatchPage] = useReducer((state, action) => {
+    const lastPage = 802
+    switch (action.type) {
+      case 'incrementWithOne':
+        return state === lastPage ? state : state + 1
+      case 'decrementWithOne':
+        return state === 1 ? state : state - 1
+      case 'incrementWithTen':
+        return state >= lastPage - 10 ? state : state + 10
+      case 'decrementWithTen':
+        return state <= 10 ? state : state - 10
+      case 'first':
+        return 1
+      case 'last':
+        return lastPage
+      case 'setWithOtherValue':
+        return action.payload
+      default:
+        return state
+    }
+  }, 1)
+
+
   useEffect(() => {
     fetchList()
   }, [page])
 
-  const fetchList = async () => {
+
+  const fetchList = () => {
     fetchDataList(`?per_page=10&page=${page}`)
   }
 
-  const fetchAutoComplete = async () => {
+
+  const fetchAutoComplete = () => {
     fetchDataAutoComplete(`/autocomplete?query=${query}`)
   }
 
